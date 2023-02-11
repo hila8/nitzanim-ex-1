@@ -7,15 +7,21 @@ pipeline {
             }
         }
         stage('Create Docker Image') {
-            steps {
-                sh 'docker build -t myimage .'
+            steps {                                           
+                sh 'docker build -t hila8/myimage:tagname .' //myimage- name of the continer , tagname- the num of the version
             }
         }
         stage('Push Docker Image') {
             steps {
-                sh 'docker push myimage'
+                sh 'docker login -u hila8 -p Nithilatavdi8'
+                sh 'docker push hila8/myimage:tagname'
             }
         }
+         stage('Run Docker Container') {
+            steps {
+                sh 'docker run -p 5000:5000 hila8/myimage:tagname'
+            }
+        }  
     }
 }
 
